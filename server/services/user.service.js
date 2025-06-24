@@ -1,5 +1,5 @@
 import { getDB } from "../config/db.js";
-import { EmailUser } from "../models/EmailUSer.js";
+import { EmailUser } from "../models/EmailUser.js";
 import nodemailer from "nodemailer";
 
 const COLLECTION_NAME = process.env.MONGODB_USERCOLLECTION;
