@@ -16,7 +16,6 @@ export const fetchBreakingNews = async ({
 
   const res = await axios.get(url);
   return res.data.articles || [];
-  
 };
 
 export const fetchArticlesForQueries = async (queries) => {
