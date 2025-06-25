@@ -20,7 +20,7 @@ function OtpVerification() {
                 otp,
             });
 
-            if (response.data.success) {
+            if (response.status === 200) {
                 alert("OTP verified successfully!");
                 navigate("/login");
             } else {

@@ -19,14 +19,12 @@ export async function createUser({ email, password, role = "user" }) {
   const otpExpiry = new Date(Date.now() + 5 * 60 * 1000);
 
   if (existingUser) {
-    // If verified user already exists, block
     if (existingUser.isVerified) {
       throw new Error("User already exists and is verified.");
     }
 
-    // If unverified user but OTP is expired, update OTP and expiry
     if (new Date() > new Date(existingUser.otpExpiry)) {
-      await collection.updateOne(
+      await db.collection(COLLECTION_NAME).updateOne(
         { email },
         {
           $set: {

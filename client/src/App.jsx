@@ -4,16 +4,40 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import OtpVerification from "./pages/OtpVerification";
+import ProtectedRoute from "./components/ProtectedRoute";
+import RedirectIfAuthenticated from "./components/RedirectIfAuthenticated";
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Landing />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/verify-otp" element={<OtpVerification />} />
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route
+                    path="/login"
+                    element={
+                        <RedirectIfAuthenticated>
+                            <Login />
+                        </RedirectIfAuthenticated>
+                    }
+                />
+
+                <Route
+                    path="/register"
+                    element={
+                        <RedirectIfAuthenticated>
+                            <Register />
+                        </RedirectIfAuthenticated>
+                    }
+                />
+                <Route path="/verify-otp" element={<RedirectIfAuthenticated><OtpVerification /></RedirectIfAuthenticated>} />
+                <Route
+                    path="/dashboard"
+                    element={
+                        <ProtectedRoute>
+                            <Dashboard />
+                        </ProtectedRoute>
+                    }
+                />
             </Routes>
         </BrowserRouter>
     );
