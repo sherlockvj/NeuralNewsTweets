@@ -10,9 +10,11 @@ function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const { data } = await register({ email, password });
-            localStorage.setItem("token", data.token);
-            navigate("/dashboard");
+            const { response } = await register({ strategy: "email", email, password });
+            if (response.data.success)
+                navigate("/verify-otp", { state: { email } });
+            else
+                alert("Registration failed");
         } catch (err) {
             alert("Registration failed");
         }

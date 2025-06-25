@@ -43,3 +43,26 @@ select {
     margin: 1rem 0;
     padding: 1rem;
 }
+
+.form-container {
+  max-width: 400px;
+  margin: 4rem auto;
+  padding: 2rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.form-container input {
+  width: 100%;
+  padding: 0.75rem;
+  margin: 1rem 0;
+}
+
+.form-container button {
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+}
+
+.error {
+  color: red;
+}
