@@ -1,6 +1,7 @@
 import { getDB } from "../config/db.js";
 import { EmailUser } from "../models/EmailUser.js";
 import nodemailer from "nodemailer";
+import bcrypt from "bcrypt";
 
 const COLLECTION_NAME = process.env.MONGODB_USERCOLLECTION;
 
@@ -13,10 +14,34 @@ export async function createUser({ email, password, role = "user" }) {
   const db = getDB();
 
   const existingUser = await findUserByEmail(email);
-  if (existingUser) throw new Error("User already exists");
 
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
   const otpExpiry = new Date(Date.now() + 5 * 60 * 1000);
+
+  if (existingUser) {
+    // If verified user already exists, block
+    if (existingUser.isVerified) {
+      throw new Error("User already exists and is verified.");
+    }
+
+    // If unverified user but OTP is expired, update OTP and expiry
+    if (new Date() > new Date(existingUser.otpExpiry)) {
+      await collection.updateOne(
+        { email },
+        {
+          $set: {
+            otp,
+            otpExpiry,
+            password: await bcrypt.hash(password, 10)
+          },
+        }
+      );
+
+      await sendOtpEmail(email, otp);
+      return { id: existingUser._id, email, role };
+    }
+    throw new Error("User already exists. Please verify your email.");
+  }
 
   const newUser = new EmailUser({
     email,
@@ -74,7 +99,7 @@ async function sendOtpEmail(email, otp) {
     service: "gmail",
     auth: {
       user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_APP_PASSWORD, 
+      pass: process.env.GMAIL_APP_PASSWORD,
     },
   });
 
