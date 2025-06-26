@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import "../styles/landing.css"
 import heroImage from "../assets/socialSharing.svg";
 import sectionImage from "../assets/tweetstorm.svg"
+import landingVideo from "../assets/progress4.mp4"
 
 function Landing() {
     return (
@@ -121,9 +122,9 @@ function Landing() {
                                 </div>
                                 <div class="text" style={{ "padding-top": "3%" }}>
                                     <p>
-                                    <strong>1. Fetch News:</strong> Your backend grabs breaking news and trending hashtags.<br /><br />
-                                    <strong>2. Generate Tweets:</strong> AI generates concise, relevant tweets.<br /><br />
-                                    <strong>3. Preview & Post:</strong> See the tweet and post it instantly.<br />
+                                        <strong>1. Fetch News:</strong> Your backend grabs breaking news and trending hashtags.<br /><br />
+                                        <strong>2. Generate Tweets:</strong> AI generates concise, relevant tweets.<br /><br />
+                                        <strong>3. Preview & Post:</strong> See the tweet and post it instantly.<br />
                                     </p>
                                 </div>
                             </div>
@@ -133,11 +134,48 @@ function Landing() {
             </section>
 
             {/* Preview */}
-            <section className="preview">
-                <h2>Live Tweet Preview</h2>
-                <div className="tweet-box">
-                    🚨 Breaking: NASA just confirmed water on the moon 🌕💧<br />
-                    #NASA #SpaceNews #MoonDiscovery
+            {/* Preview Section */}
+            <section className="preview-section" id="preview">
+                {/* <div className="underlay_features">
+                    <h1>
+                        <div><span>PREVIEW</span></div>
+                    </h1>
+                </div> */}
+
+                <div className="home-container">
+                    {/* Row 1: Tweet Preview Cards */}
+                    <div className="row">
+                        <div className="section-title text-center">
+                            <h1>Live Tweet Preview</h1>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="about-content">
+                            <div className="row">
+                                <div className="img">
+                                    <div className="feature-box feature-margin">
+                                        <p><b>AI Breakthrough 🤖:</b> OpenAI releases new GPT model capable of real-time web tasks. Future of work is here! #AI #OpenAI #Tech</p>
+                                    </div>
+
+                                    <div className="feature-box feature-margin">
+                                        <p>
+                                            <b>Market Watch 📉:</b> Stocks dip as inflation fears rise. Experts warn of correction. #StockMarket #Inflation #FinanceNews
+                                        </p>
+                                    </div>
+                                </div>
+                                {/* Row 2: Video Preview */}
+                                <div className="text">
+                                    <div className="video-container" style={{ maxWidth: "800px", width: "100%" }}>
+                                        <video controls width="100%" style={{ borderRadius: "10px" }}>
+                                            <source src={landingVideo} type="video/mp4" />
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>

@@ -309,18 +309,21 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding-bottom: 12vh;
 }
 
 .feature-box {
     flex: 0 0 calc(33.33% - 25px);
-    max-width: calc(33.33% - 25px);
     background-color: #f9f9f9;
     padding: 24px;
     border-radius: 10px;
     text-align: left;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     transition: transform 0.3s ease;
+}
+
+.feature-margin {
+    margin-top: 10%;
+    margin-bottom: 10%;
 }
 
 .feature-box:hover {
@@ -605,24 +608,32 @@ body {
 
 /* How it works */
 
-.preview {
-    background-color: #1a1a1a;
-    padding: 60px 20px;
-    text-align: center;
+.preview-section {
+    padding: 100px 15px 60px;
+    background-color: #000;
+    position: relative;
 }
 
-.preview h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
+.preview-section h1 {
+    color: #fff;
 }
 
-.tweet-box {
+.preview-section .feature-box {
     background-color: #2f2f2f;
-    padding: 20px;
-    border-radius: 10px;
-    display: inline-block;
-    font-size: 1.1rem;
-    color: #eee;
-    max-width: 600px;
-    margin: auto;
+}
+
+.preview-section .feature-box h3,
+.preview-section .feature-box p {
+    color: #fff;
+}
+
+.preview-section .about-content .img {
+    flex: 0 0 33.33%;
+    max-width: 33.33%;
+}
+
+.preview-section .about-content .text {
+    flex: 0 0 66.66%;
+    max-width: 66.66%;
+    padding-left: 70px;
 }
