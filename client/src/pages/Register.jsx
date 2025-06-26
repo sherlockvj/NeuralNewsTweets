@@ -1,38 +1,87 @@
 import { useState } from "react";
 import { register } from "../services/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import Toast from "../components/Toast"; 
+import "../styles/global.css";
 
 function Register() {
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [error, setError] = useState("");
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (password !== confirmPassword) {
+            setError("Passwords do not match");
+            return;
+        }
+
         try {
-            const response = await register({ strategy: "email", email, password });
+            const response = await register({
+                strategy: "email",
+                email,
+                password,
+                name,
+            });
+
             if (response.status === 200) {
                 navigate("/verify-otp", { state: { email } });
+            } else {
+                setError("Registration failed");
             }
-            else
-                alert("Registration failed");
         } catch (err) {
-            alert("Registration failed");
+            setError(err?.response?.data?.message || "Registration failed");
         }
     };
 
     return (
-        <div className="container">
-            <h2>Register</h2>
-            <form onSubmit={handleSubmit}>
-                <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-                <input
-                    placeholder="Password"
-                    type="password"
-                    onChange={(e) => setPassword(e.target.value)}
+        <div className="login-container">
+            <div className="login-card">
+                <h2>Create Account</h2>
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        placeholder="Full Name"
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                    />
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                    <input
+                        type="password"
+                        placeholder="Re-enter Password"
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                    />
+                    <button type="submit">Register</button>
+                </form>
+
+                <div className="register-text">
+                    Already have an account? <Link to="/login">Sign in</Link>
+                </div>
+            </div>
+
+            {error && (
+                <Toast
+                    message={error}
+                    type="warning"
+                    onClose={() => setError("")}
                 />
-                <button type="submit">Register</button>
-            </form>
+            )}
         </div>
     );
 }

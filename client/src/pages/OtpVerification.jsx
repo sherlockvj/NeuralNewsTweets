@@ -1,51 +1,89 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { verifyOtp } from "../services/api";
+import Toast from "../components/Toast";
+import "../styles/global.css";
 
 function OtpVerification() {
+    const [emailInput, setEmailInput] = useState("");
     const [otp, setOtp] = useState("");
-    const [error, setError] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+
     const navigate = useNavigate();
     const location = useLocation();
+    const stateEmail = location.state?.email;
 
-    const email = location.state?.email;
+    const email = stateEmail || emailInput;
+
+    useEffect(() => {
+        if (stateEmail) {
+            setSuccessMessage(`OTP has been sent to ${stateEmail}`);
+        }
+    }, [stateEmail]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError("");
+        setErrorMessage("");
 
         try {
-            const response = await verifyOtp({
-                email,
-                otp,
-            });
+            const response = await verifyOtp({ email, otp });
 
             if (response.status === 200) {
-                alert("OTP verified successfully!");
-                navigate("/login");
+                setSuccessMessage("OTP verified successfully! Login");
+                setTimeout(() => {
+                    navigate("/login");
+                }, 1000);
             } else {
-                setError("Invalid OTP");
+                setErrorMessage("Invalid OTP");
             }
         } catch (err) {
-            setError("Something went wrong.");
+            setErrorMessage(
+                err?.response?.data?.message || "Something went wrong."
+            );
         }
     };
 
     return (
-        <div className="form-container">
-            <h2>OTP Verification</h2>
-            <p>Please enter the OTP sent to your email.</p>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    placeholder="Enter OTP"
-                    value={otp}
-                    onChange={(e) => setOtp(e.target.value)}
-                    required
+        <div className="login-container">
+            <div className="login-card">
+                <h2>Verify OTP</h2>
+                <p>Please enter the OTP sent to your email.</p>
+                <form onSubmit={handleSubmit}>
+                    {!stateEmail && (
+                        <input
+                            type="email"
+                            placeholder="Enter your email"
+                            value={emailInput}
+                            onChange={(e) => setEmailInput(e.target.value)}
+                            required
+                        />
+                    )}
+                    <input
+                        type="text"
+                        placeholder="Enter OTP"
+                        value={otp}
+                        onChange={(e) => setOtp(e.target.value)}
+                        required
+                    />
+                    <button type="submit">Verify</button>
+                </form>
+            </div>
+
+            {successMessage && (
+                <Toast
+                    message={successMessage}
+                    type="success"
+                    onClose={() => setSuccessMessage("")}
                 />
-                <button type="submit">Verify</button>
-            </form>
-            {error && <p className="error">{error}</p>}
+            )}
+            {errorMessage && (
+                <Toast
+                    message={errorMessage}
+                    type="warning"
+                    onClose={() => setErrorMessage("")}
+                />
+            )}
         </div>
     );
 }
