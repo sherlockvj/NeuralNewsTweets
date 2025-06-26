@@ -6,10 +6,13 @@ import Dashboard from "./pages/Dashboard";
 import OtpVerification from "./pages/OtpVerification";
 import ProtectedRoute from "./components/ProtectedRoute";
 import RedirectIfAuthenticated from "./components/RedirectIfAuthenticated";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 function App() {
     return (
         <BrowserRouter>
+            <Navbar />
             <Routes>
                 <Route path="/" element={<Landing />} />
                 <Route
@@ -39,6 +42,7 @@ function App() {
                     }
                 />
             </Routes>
+            <Footer />
         </BrowserRouter>
     );
 }
