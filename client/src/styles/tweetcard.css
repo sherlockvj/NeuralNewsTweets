@@ -1,0 +1,79 @@
+.tweet-card {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eee;
+    max-width: 600px;
+    margin: 20px auto;
+    position: relative;
+    font-family: "Segoe UI", sans-serif;
+    transition: box-shadow 0.3s ease;
+}
+
+.tweet-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.tweet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tweet-author {
+    color: #111;
+    font-size: 15px;
+}
+
+.handle {
+    color: #777;
+    font-weight: normal;
+}
+
+.tweet-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 16px;
+    color: #444;
+    transition: transform 0.2s, color 0.2s;
+}
+
+.tweet-actions button:hover {
+    transform: scale(1.2);
+    color: #e31b23;
+}
+
+.tweet-text {
+    font-size: 16px;
+    margin: 16px 0 10px;
+    color: #222;
+    line-height: 1.6;
+    white-space: pre-line;
+}
+
+.tweet-hashtags {
+    color: #1da1f2;
+    font-weight: 500;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.tweet-src {
+    font-size: 12px;
+    color: #666;
+    border-top: 1px solid #eee;
+    padding-top: 8px;
+}
+
+.tweet-src a {
+    color: #888;
+    text-decoration: none;
+    word-break: break-word;
+}
+
+.tweet-src a:hover {
+    text-decoration: underline;
+}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { register } from "../services/api";
 import { useNavigate, Link } from "react-router-dom";
-import Toast from "../components/Toast"; 
+import Toast from "../components/Toast";
 import "../styles/global.css";
 
 function Register() {
@@ -9,6 +9,7 @@ function Register() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
@@ -19,6 +20,8 @@ function Register() {
             setError("Passwords do not match");
             return;
         }
+
+          setLoading(true);
 
         try {
             const response = await register({
@@ -35,6 +38,8 @@ function Register() {
             }
         } catch (err) {
             setError(err?.response?.data?.message || "Registration failed");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -67,7 +72,11 @@ function Register() {
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
                     />
-                    <button type="submit">Register</button>
+                    {loading ? (
+                        <div className="spinner"></div>
+                    ) : (
+                        <button type="submit">Register</button>
+                    )}
                 </form>
 
                 <div className="register-text">

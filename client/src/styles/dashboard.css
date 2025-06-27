@@ -1,0 +1,85 @@
+.dashboard-container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 40px 20px;
+    height: 100vh;
+}
+
+.info-section {
+    margin-bottom: 30px;
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.03);
+}
+
+.info-section h2 {
+    color: #111;
+    margin-bottom: 10px;
+}
+
+.info-section p {
+    color: #555;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.form-section {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.03);
+    margin-bottom: 40px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group select {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.button-group {
+    display: flex;
+    gap: 16px;
+    justify-content: flex-start;
+}
+
+.button-group button {
+    background-color: #e31b23;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.button-group button:hover {
+    background-color: #c91a1f;
+}
+
+.tweets-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
