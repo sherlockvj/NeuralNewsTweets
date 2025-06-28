@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { getBreakingTweets, getTrendingTweets } from "../services/api";
 import TweetCard from "../components/TweetCard";
 import "../styles/dashboard.css";
@@ -13,9 +13,43 @@ function Dashboard() {
     const [tweets, setTweets] = useState([]);
     const [errorMessage, setErrorMessage] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
+    const [loaderMessage, setLoaderMessage] = useState("");
+    const intervalRef = useRef(null);
+
+
+    const loaderMessages = [
+        "Scanning breaking news sources...",
+        "Tweet-scriber is sharpening its wit...",
+        "Calibrating sarcasm levels...",
+        "Composing your viral moment...",
+        "Distilling headlines into punchlines...",
+        "Analyzing trends and twisting words...",
+        "Assembling the perfect tweet cocktail...",
+        "Injecting 140cc of personality...",
+        "Letting AI channel its inner influencer...",
+        "One sec... channeling the Twitter gods 🐦⚡",
+    ];
+
+    const startLoaderMessages = () => {
+        let index = 0;
+        setLoaderMessage(loaderMessages[index]);
+
+        intervalRef.current = setInterval(() => {
+            index = (index + 1) % loaderMessages.length;
+            setLoaderMessage(loaderMessages[index]);
+        }, 2500);
+    };
+
+    const stopLoaderMessages = () => {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+    };
+
 
     const handleBreaking = async () => {
         setLoading(true);
+        startLoaderMessages();
+
         try {
             const { data } = await getBreakingTweets({ location, tone, stance, category });
             setTweets(data.tweets);
@@ -24,11 +58,14 @@ function Dashboard() {
             setErrorMessage("Some error occurred! Try again.");
         } finally {
             setLoading(false);
+            stopLoaderMessages();
         }
     };
 
     const handleTrending = async () => {
         setLoading(true);
+        startLoaderMessages();
+
         try {
             const { data } = await getTrendingTweets({ location, tone, stance });
             setTweets(data.tweets); setSuccessMessage("Successfully Generated the Tweets!")
@@ -36,6 +73,7 @@ function Dashboard() {
             setErrorMessage("Some error occurred! Try again.");
         } finally {
             setLoading(false);
+            stopLoaderMessages();
         }
     };
 
@@ -91,7 +129,10 @@ function Dashboard() {
 
                 <div className="button-group">
                     {loading ? (
-                        <div className="spinner"></div>
+                        <div className="loader-area">
+                            <div className="loader-spinner"></div>
+                            <p className="loader-message">{loaderMessage}</p>
+                        </div>
                     ) : (
                         <button onClick={handleBreaking}>🔍 From Breaking News</button>)}
                     {!loading ? (<button onClick={handleTrending}>🔥 From Twitter Trends</button>) : (<span></span>)}

@@ -39,8 +39,6 @@ function Register() {
         intervalRef.current = null;
     };
 
-    const dummyWait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -60,8 +58,6 @@ function Register() {
         startLoaderMessages();
 
         try {
-            await dummyWait(30000);
-
             const response = await register({
                 strategy: "email",
                 email,
