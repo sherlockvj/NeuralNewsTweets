@@ -50,6 +50,7 @@ function OtpVerification() {
 
     return (
         <div className="login-container">
+            <div className="gradient-blob"></div>
             <div className="login-card">
                 <h2>Verify OTP</h2>
                 <p>Please enter the OTP sent to your email.</p>

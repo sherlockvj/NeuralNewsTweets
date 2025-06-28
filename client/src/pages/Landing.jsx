@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import "../styles/landing.css"
 import heroImage from "../assets/socialSharing.svg";
 import sectionImage from "../assets/tweetstorm.svg"
-import landingVideo from "../assets/progress4.mp4"
+import landingVideo from "../assets/Neural_Tweets.mp4"
 
 function Landing() {
     return (
@@ -19,7 +19,7 @@ function Landing() {
                                 <h3>Auto-generate tweets from trending news and hashtags</h3>
                                 <div className="cv_btn">
                                     <a href="#features">Explore Features</a>
-                                    <a href="#demo">Live Demo</a>
+                                    <a href="#preview">Live Demo</a>
                                 </div>
                             </div>
 

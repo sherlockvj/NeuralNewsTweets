@@ -89,6 +89,21 @@
   color: var(--text-color);
 }
 
+.logout-btn {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    padding: 0;
+    text-decoration: underline;
+}
+
+.logout-btn:hover {
+    color: #e31b23;
+}
+
+
 /* Responsive */
 @media (max-width: 768px) {
   .nav-toggle {

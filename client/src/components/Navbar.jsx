@@ -13,6 +13,11 @@ const Navbar = () => {
 
     const isActive = (path) => location.pathname === path;
 
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        window.location.href = "/login";
+    };
+
     return (
         <nav className="navbar">
             <div className="nav-container">
@@ -36,11 +41,18 @@ const Navbar = () => {
                         </Link>
                     </li>
                     {isLoggedIn() ? (
-                        <li>
-                            <Link to="/dashboard" className={isActive("/dashboard") ? "active" : ""}>
-                                Dashboard
-                            </Link>
-                        </li>
+                        <>
+                            <li>
+                                <Link to="/dashboard" className={isActive("/dashboard") ? "active" : ""}>
+                                    Dashboard
+                                </Link>
+                            </li>
+                            <li>
+                                <Link onClick={handleLogout}>
+                                    Logout
+                                </Link>
+                            </li>
+                        </>
                     ) : (
                         <>
                             <li>

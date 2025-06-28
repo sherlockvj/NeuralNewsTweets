@@ -2,12 +2,34 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Full viewport height */
+    height: 100vh;
     background-color: #fff;
     padding: 20px;
 }
 
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 40px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    cursor: pointer;
+    color: #999;
+    font-size: 1.1rem;
+    bottom: 40%;
+}
+
+
 .login-card {
+    z-index: 2;
     background-color: #f9f9f9;
     border-radius: 12px;
     padding: 40px;
@@ -64,18 +86,23 @@
 }
 
 .spinner {
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #e31b23;
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  animation: spin 1s linear infinite;
-  margin: 0 auto 20px auto;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #e31b23;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px auto;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .loader-area {
@@ -109,12 +136,48 @@
 }
 
 @keyframes shine {
-    0% { background-position: 0% center; }
-    100% { background-position: 200% center; }
+    0% {
+        background-position: 0% center;
+    }
+
+    100% {
+        background-position: 200% center;
+    }
 }
 
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+
+.gradient-blob {
+    position: absolute;
+    inset: 0;
+    top: 0;
+    z-index: 1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.gradient-blob::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 800px;
+    height: 100vh;
+    background: linear-gradient(to top right, #ff4694, #E60023);
+    opacity: 0.15;
+    filter: blur(100px);
+    transform: skewX(-30deg) translateX(-50%) rotate(-15deg);
+    z-index: -1;
+    pointer-events: none;
 }

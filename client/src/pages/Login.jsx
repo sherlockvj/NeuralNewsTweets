@@ -1,8 +1,10 @@
-import { useRef, useState } from "react";
-import { login } from "../services/api";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import "../styles/global.css";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import Toast from "../components/Toast";
+import { login } from "../services/api";
+import "../styles/global.css";
+
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -10,8 +12,9 @@ function Login() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const intervalRef = useRef(null);
-
+    const [showPassword, setShowPassword] = useState(false);
     const [loaderMessage, setLoaderMessage] = useState("");
+
     const loaderMessages = [
         "Warming up your tweet engine...",
         "Logging you in securely...",
@@ -65,6 +68,7 @@ function Login() {
 
     return (
         <div className="login-container">
+            <div className="gradient-blob"></div>
             {error && <Toast message={error} onClose={() => setError(null)} />}
             <div className="login-card">
                 <h2>Login</h2>
@@ -76,13 +80,18 @@ function Login() {
                         onChange={(e) => setEmail(e.target.value)}
                         required
                     />
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
+                    <div className="password-wrapper">
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                        <span onClick={() => setShowPassword(!showPassword)} className="toggle-password">
+                            {showPassword ? <FiEyeOff /> : <FiEye />}
+                        </span>
+                    </div>
                     {loading ? (
                         <div className="loader-area">
                             <div className="loader-spinner"></div>

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getBreakingTweets, getTrendingTweets } from "../services/api";
 import TweetCard from "../components/TweetCard";
 import "../styles/dashboard.css";
@@ -15,6 +15,13 @@ function Dashboard() {
     const [successMessage, setSuccessMessage] = useState("");
     const [loaderMessage, setLoaderMessage] = useState("");
     const intervalRef = useRef(null);
+
+    const [showInfoGradient, setShowInfoGradient] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setShowInfoGradient(false), 3000);
+        return () => clearTimeout(timer);
+    }, []);
 
 
     const loaderMessages = [
@@ -48,6 +55,7 @@ function Dashboard() {
 
     const handleBreaking = async () => {
         setLoading(true);
+        setTweets([]);
         startLoaderMessages();
 
         try {
@@ -64,6 +72,7 @@ function Dashboard() {
 
     const handleTrending = async () => {
         setLoading(true);
+        setTweets([]);
         startLoaderMessages();
 
         try {
@@ -133,9 +142,9 @@ function Dashboard() {
                             <div className="loader-spinner"></div>
                             <p className="loader-message">{loaderMessage}</p>
                         </div>
-                    ) : (
-                        <button onClick={handleBreaking}>🔍 From Breaking News</button>)}
-                    {!loading ? (<button onClick={handleTrending}>🔥 From Twitter Trends</button>) : (<span></span>)}
+                    ) : (<button onClick={handleTrending}>🔥 From Twitter Trends</button>
+                    )}
+                    {!loading ? (<button onClick={handleBreaking}>🔍 From Breaking News</button>) : (<span></span>)}
 
                 </div>
             </section>
@@ -143,7 +152,7 @@ function Dashboard() {
             {/* Tweet Cards */}
             <section className="tweets-section">
                 {tweets?.map((tweet, i) => (
-                    <TweetCard key={tweet.id || i} tweet={tweet} />
+                    <TweetCard key={`${tweet.id || i}-${tweet.tweet}`} tweet={tweet} />
                 ))}
             </section>
 

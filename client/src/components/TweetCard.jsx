@@ -9,13 +9,29 @@ function TweetCard({ tweet }) {
     const [source, setSource] = useState(tweet.src || "");
     const [copied, setCopied] = useState(false);
 
+    const extractSourceFromTweet = (tweet) => {
+        if (tweet.src) return tweet.src;
+        const readMoreMatch = tweet.tweet.match(/Read more:\s*(https?:\/\/[^\s]+)/i);
+        if (readMoreMatch) return readMoreMatch[1];
+        const genericUrlMatch = tweet.tweet.match(/(https?:\/\/[^\s]+)/g);
+        if (genericUrlMatch) return genericUrlMatch[0];
+
+        return null;
+    }
+
+    const cleanTweetText = (text, srcUrl) => {
+        if (!srcUrl) return text;
+        return text.replace(srcUrl, "").trim();
+    }
+
+
+
     useEffect(() => {
-        const match = tweet.tweet.match(/(Read more|Read here):?\s*(https?:\/\/[^\s]+)/i);
-        if (match) {
-            const linkText = match[2];
-            const cleaned = tweet.tweet.replace(match[0], "").trim();
-            setMainText(cleaned);
-            setSource(linkText);
+        const src = extractSourceFromTweet(tweet);
+        if (src) {
+            const displayText = cleanTweetText(tweet.tweet, src);
+            setMainText(displayText);
+            setSource(src);
         }
     }, [tweet]);
 

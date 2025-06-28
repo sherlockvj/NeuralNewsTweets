@@ -1,6 +1,7 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { register } from "../services/api";
 import { useNavigate, Link } from "react-router-dom";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import Toast from "../components/Toast";
 import "../styles/global.css";
 
@@ -12,6 +13,7 @@ function Register() {
     const [loading, setLoading] = useState(false);
     const [loaderMessage, setLoaderMessage] = useState("");
     const [error, setError] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const intervalRef = useRef(null);
 
@@ -47,7 +49,7 @@ function Register() {
             return;
         }
 
-        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
 
         if (!passwordRegex.test(password)) {
             setError("Password must be at least 6 characters long and include at least one letter and one number.");
@@ -71,7 +73,7 @@ function Register() {
                 setError("Registration failed");
             }
         } catch (err) {
-            setError(err?.response?.data?.message || "Registration failed");
+            setError(err?.response?.data?.message || "Registration failed. Email already in use!");
         } finally {
             stopLoaderMessages();
             setLoading(false);
@@ -80,6 +82,7 @@ function Register() {
 
     return (
         <div className="login-container">
+            <div className="gradient-blob"></div>
             <div className="login-card">
                 <h2>Create Account</h2>
                 <form onSubmit={handleSubmit}>
@@ -95,18 +98,28 @@ function Register() {
                         onChange={(e) => setEmail(e.target.value)}
                         required
                     />
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                    <input
-                        type="password"
-                        placeholder="Re-enter Password"
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        required
-                    />
+                    <div className="password-wrapper">
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            placeholder="Password"
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                        <span onClick={() => setShowPassword(!showPassword)} className="toggle-password">
+                            {showPassword ? <FiEyeOff /> : <FiEye />}
+                        </span>
+                    </div>
+                    <div className="password-wrapper">
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            placeholder="Confirm Password"
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            required
+                        />
+                        <span onClick={() => setShowPassword(!showPassword)} className="toggle-password">
+                            {showPassword ? <FiEyeOff /> : <FiEye />}
+                        </span>
+                    </div>
                     {loading ? (
                         <div className="loader-area">
                             <div className="loader-spinner"></div>
