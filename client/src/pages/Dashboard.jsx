@@ -2,22 +2,41 @@ import { useState } from "react";
 import { getBreakingTweets, getTrendingTweets } from "../services/api";
 import TweetCard from "../components/TweetCard";
 import "../styles/dashboard.css";
+import Toast from "../components/Toast";
 
 function Dashboard() {
     const [location, setLocation] = useState("US");
+    const [loading, setLoading] = useState(false);
     const [tone, setTone] = useState("sarcastic");
     const [stance, setStance] = useState("supportive");
     const [category, setCategory] = useState("technology");
     const [tweets, setTweets] = useState([]);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
 
     const handleBreaking = async () => {
-        const { data } = await getBreakingTweets({ location, tone, stance, category });
-        setTweets(data.tweets);
+        setLoading(true);
+        try {
+            const { data } = await getBreakingTweets({ location, tone, stance, category });
+            setTweets(data.tweets);
+            setSuccessMessage("Successfully Generated the Tweets!")
+        } catch (e) {
+            setErrorMessage("Some error occurred! Try again.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleTrending = async () => {
-        const { data } = await getTrendingTweets({ location, tone, stance });
-        setTweets(data.tweets);
+        setLoading(true);
+        try {
+            const { data } = await getTrendingTweets({ location, tone, stance });
+            setTweets(data.tweets); setSuccessMessage("Successfully Generated the Tweets!")
+        } catch (e) {
+            setErrorMessage("Some error occurred! Try again.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -71,8 +90,12 @@ function Dashboard() {
                 </div>
 
                 <div className="button-group">
-                    <button onClick={handleBreaking}>🔍 From Breaking News</button>
-                    <button onClick={handleTrending}>🔥 From Twitter Trends</button>
+                    {loading ? (
+                        <div className="spinner"></div>
+                    ) : (
+                        <button onClick={handleBreaking}>🔍 From Breaking News</button>)}
+                    {!loading ? (<button onClick={handleTrending}>🔥 From Twitter Trends</button>) : (<span></span>)}
+
                 </div>
             </section>
 
@@ -82,6 +105,21 @@ function Dashboard() {
                     <TweetCard key={tweet.id || i} tweet={tweet} />
                 ))}
             </section>
+
+            {successMessage && (
+                <Toast
+                    message={successMessage}
+                    type="success"
+                    onClose={() => setSuccessMessage("")}
+                />
+            )}
+            {errorMessage && (
+                <Toast
+                    message={errorMessage}
+                    type="warning"
+                    onClose={() => setErrorMessage("")}
+                />
+            )}
         </div>
     );
 }

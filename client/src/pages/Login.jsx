@@ -7,6 +7,7 @@ import Toast from "../components/Toast";
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     const navigate = useNavigate();
@@ -14,6 +15,7 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
+        setLoading(true);
         try {
             const response = await login({ strategy: "email", email, password });
             localStorage.setItem("token", response.data.token);
@@ -22,6 +24,8 @@ function Login() {
             const message =
                 err?.response?.data?.message || "Login failed. Please try again.";
             setError(message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -45,7 +49,10 @@ function Login() {
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
-                    <button type="submit">Login</button>
+                    {loading ? (
+                        <div className="spinner"></div>
+                    ) : (
+                        <button type="submit">Login</button>)}
                 </form>
                 <p className="register-text">
                     Don't have an account?{" "}

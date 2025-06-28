@@ -21,7 +21,7 @@ function Register() {
             return;
         }
 
-          setLoading(true);
+        setLoading(true);
 
         try {
             const response = await register({

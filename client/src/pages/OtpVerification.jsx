@@ -7,6 +7,7 @@ import "../styles/global.css";
 function OtpVerification() {
     const [emailInput, setEmailInput] = useState("");
     const [otp, setOtp] = useState("");
+    const [loading, setLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
@@ -25,6 +26,7 @@ function OtpVerification() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrorMessage("");
+        setLoading(true);
 
         try {
             const response = await verifyOtp({ email, otp });
@@ -41,6 +43,8 @@ function OtpVerification() {
             setErrorMessage(
                 err?.response?.data?.message || "Something went wrong."
             );
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -66,7 +70,10 @@ function OtpVerification() {
                         onChange={(e) => setOtp(e.target.value)}
                         required
                     />
-                    <button type="submit">Verify</button>
+                    {loading ? (
+                        <div className="spinner"></div>
+                    ) : (
+                        <button type="submit">Verify</button>)}
                 </form>
             </div>
 
