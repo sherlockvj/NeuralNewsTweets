@@ -68,7 +68,7 @@ export async function verifyUserOtp(email, otp) {
 
   if (!user) throw new Error("User not found");
   if (user.isVerified) throw new Error("User already verified");
-  console.log(user.otp + "===>" + otp);
+
   if (user.otp != otp) throw new Error("Invalid OTP");
   if (new Date() > new Date(user.otpExpiry)) throw new Error("OTP expired");
 

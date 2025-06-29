@@ -4,6 +4,8 @@
 
 ---
 
+<img src="./assets/landing.png" alt="Landing" />
+
 ## Project Overview
 
 NeuralNewsTweets is a full-stack application that enables users to generate AI-crafted tweets based on:
@@ -38,6 +40,11 @@ Built for content creators, journalists, and marketers, the system uses the Open
 - Dashboard with:
   - Input controls for tweet generation
   - Display of tweets in styled cards
+
+<video width="600" controls>
+  <source src="assets/Demo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 ---
 
