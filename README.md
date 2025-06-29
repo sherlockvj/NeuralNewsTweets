@@ -88,3 +88,42 @@ Built for content creators, journalists, and marketers, the system uses the Open
 3.1. Navigate to the `client/` directory, and do `npm install`.
 3.2. Add a `.env` file with configs mentioned in `client/.env.example` (replace your server PORT).
 3.3. Run the frontend development server - `npm start`.
+
+
+## Product Demo (SS)
+
+1. Landing Page Home Section
+   
+  <img src="./assets/screenshots/1_landing.png" alt="Landing" />
+
+1. Feature Section
+   
+   <img src="./assets/screenshots/2_features-section.png" alt="Landing" />
+
+2. Working Section
+   
+   <img src="./assets/screenshots/3_working.png" alt="Landing" />
+
+3. Demo Section
+   
+   <img src="./assets/screenshots/4_demo.png" alt="Landing" />
+
+4. Login Page
+   
+   <img src="./assets/screenshots/5_login.png" alt="Landing" />
+
+5. Register Page
+   
+   <img src="./assets/screenshots/6_register.png" alt="Landing" />
+
+6. Verify OTP Page
+   
+   <img src="./assets/screenshots/7_verifyOTP.png" alt="Landing" />
+
+7. Dashboard Page
+  
+   <img src="./assets/screenshots/8_dashboard.png" alt="Landing" />
+
+8.  Tweets Part
+    
+    <img src="./assets/screenshots/9_tweets.png" alt="Landing" />
