@@ -4,7 +4,7 @@
 
 ---
 
-<img src="./assets/landing.png" alt="Landing" />
+<img src="./assets/Landing.png" alt="Landing" />
 
 ## Project Overview
 
