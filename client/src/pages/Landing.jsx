@@ -91,7 +91,7 @@ function Landing() {
                             <h2>What are you waiting for? Try it out here...</h2>
                         </div>
                         <div class="cv_btn">
-                            <Link to="/login">
+                            <Link to="/dashboard">
                                 Neural Tweets
                             </Link>
                         </div>
