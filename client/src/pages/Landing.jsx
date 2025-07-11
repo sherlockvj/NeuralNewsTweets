@@ -19,7 +19,7 @@ function Landing() {
                                 <h3>Auto-generate tweets from trending news and hashtags</h3>
                                 <div className="cv_btn">
                                     <a href="#features">Explore Features</a>
-                                    <a href="#preview">Live Demo</a>
+                                    <a href="/dashboard">Live Demo</a>
                                 </div>
                             </div>
 

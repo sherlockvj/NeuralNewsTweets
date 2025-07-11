@@ -44,7 +44,7 @@ const Navbar = () => {
                         <>
                             <li>
                                 <Link to="/dashboard" className={isActive("/dashboard") ? "active" : ""}>
-                                    Dashboard
+                                    Try me!
                                 </Link>
                             </li>
                             <li>
@@ -54,7 +54,11 @@ const Navbar = () => {
                             </li>
                         </>
                     ) : (
-                        <>
+                        <><li>
+                            <Link to="/dashboard" className={isActive("/dashboard") ? "active" : ""}>
+                                Try me!
+                            </Link>
+                        </li>
                             <li>
                                 <Link to="/login" className={isActive("/login") ? "active" : ""}>
                                     Login

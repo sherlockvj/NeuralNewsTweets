@@ -32,18 +32,30 @@ export const handleBreakingNewsTweets = async ({
   return tweets;
 };
 
-export const handleTrendingTweets = async ({ location, tone, stance }) => {
-  const trends = await TrendService.fetchTwitterTrends(location);
-  const queries = await OpenAIService.generateSearchQueriesFromTrends(trends);
-  const articles = await NewsService.fetchArticlesForQueries(queries);
+export const handleTrendingTweets = async ({ location, tone, stance, category }) => {
+  try {
+    const trends = await TrendService.fetchTwitterTrends(location);
+    const queries = await OpenAIService.generateSearchQueriesFromTrends(trends);
+    const articles = await NewsService.fetchArticlesForQueries(queries);
 
-  const tweets = await OpenAIService.generateBasicNewsTweets({
-    tone,
-    stance,
-    newsArticles: articles,
-  });
+    const tweets = await OpenAIService.generateBasicNewsTweets({
+      tone,
+      stance,
+      newsArticles: articles,
+    });
 
-  return tweets;
+    return tweets;
+  } catch (e) {
+    console.error(e);
+    const newsArticles = await NewsService.fetchBreakingNews(location, category);
+    const tweets = await OpenAIService.generateBasicNewsTweets({
+      tone,
+      stance,
+      newsArticles,
+    });
+
+    return tweets;
+  }
 };
 
 export const handleBreakingNewsTweetsWithAiTrends = async ({
@@ -62,7 +74,6 @@ export const handleBreakingNewsTweetsWithAiTrends = async ({
     endTime,
   });
 
-  console.log("Fetching Twitter trends...");
   const trends = await TrendService.fetchTwitterTrends(location);
 
   const tweets = await OpenAIService.generateBasicNewsTweets({
@@ -73,3 +84,4 @@ export const handleBreakingNewsTweetsWithAiTrends = async ({
 
   return { tweeets: tweets, currentTrends: trends };
 };
+
